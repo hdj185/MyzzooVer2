@@ -2,6 +2,8 @@ package View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -9,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import DAO.CalDAO;
 import DAO.HoldingDAO;
 import Model.HoldingStockVO;
 
@@ -94,8 +97,15 @@ public class HoldingListView extends ListView {
 		
 		Object record[] = new Object[header.length];
 		
-		for(int i = 0; i < record.length; i++) 
-			record[i] = i;
+		CalDAO cal = new CalDAO();
+		try {
+			record[0] = cal.totalStock(userId);
+			record[1] = cal.totalAvg(userId);
+			record[2] = cal.profitRate(userId);
+			record[3] = cal.profit(userId);
+		} catch (SQLException | ParseException e) {
+			e.printStackTrace();
+		}
 		
 		model.addRow(record);
 		
