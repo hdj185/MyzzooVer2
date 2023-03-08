@@ -24,8 +24,8 @@ public class RankingListView extends ListView {
 	public static JPanel createUI() {
 		init();
 
-		titleLabel.setText("《 시가총액순위 》");	// 타이틀 설정
-		setTimeLabel(); //시간 갱신
+		titleLabel.setText("《 시가 총액 순위 》");	// 타이틀 설정
+		setTimeLabel(); 									//시간 갱신
 		table.setModel(getContent());				// table 내용 넣기
 		scrollpane.setBounds(45, 200, 900, 500); //scrollpane 크기 및 위치
 		
@@ -34,7 +34,7 @@ public class RankingListView extends ListView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				refresh(table);			// 테이블 지우기
-				setTimeLabel();	// 시간 갱신
+				setTimeLabel();			// 시간 갱신
 				table.setModel(getContent()); //table의 model 넣어줌				
 			}
 		});

@@ -28,11 +28,12 @@ public class HoldingListView extends ListView {
 	public static JPanel createUI() {
 		init();
 
-		titleLabel.setText("《 보유주식잔고 》");	// 타이틀 설정
+		titleLabel.setText("《 보유 주식 잔고 》");	// 타이틀 설정
 		setTimeLabel(); //시간 갱신
 		table.setModel(getContent());				// table 내용 넣기
 		scrollpane.setBounds(45, 255, 900, 445); //scrollpane 크기 및 위치
 		
+		//calTable 추가
 		calTable = getTable();
 		calTable.setModel(getCalContent());
 		calPane = new JScrollPane(calTable);
