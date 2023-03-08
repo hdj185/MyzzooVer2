@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import Model.MarketVO;
+import Service.Crawler;
 
 public class MarketDAO extends DBConn {
 	public MarketDAO() {}

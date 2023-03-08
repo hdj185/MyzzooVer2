@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import Model.HoldingStockVO;
+import Service.Crawler;
 
 public class HoldingDAO extends DBConn {
 	public HoldingDAO() {}
