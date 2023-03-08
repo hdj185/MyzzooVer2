@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,9 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import DAO.HoldingDAO;
-import Model.HoldingStockVO;
 
 public class ListView {
 	static JPanel listPane;
@@ -25,7 +21,7 @@ public class ListView {
 	static JButton RefreshBtn;
 	static JButton logoutBtn;
 	static JScrollPane scrollpane;
-	static JTable table = new JTable();
+	static JTable table;
 	
 	ListView() {
 		listPane = new JPanel();
@@ -38,13 +34,13 @@ public class ListView {
 	
 	public static void init() {
 		// 타이틀
-		titleLabel = new JLabel("《 보유주식 잔고 》");
+		titleLabel = new JLabel();
 		titleLabel.setBounds(340, 50, 310, 75);
 		titleLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 35));
 
 		
 		// 기준 시간
-		timeLabel = new JLabel();
+		timeLabel = new JLabel("기준 시간 : ");
 		timeLabel.setBounds(45, 180, 200, 15);
 		timeLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
 		
@@ -53,12 +49,7 @@ public class ListView {
 		RefreshBtn = new JButton("새로고침");
 		RefreshBtn.setBounds(750, 30, 90, 25);
 		RefreshBtn.setFont(new Font("맑은 고딕", Font.BOLD, 10));
-//		RefreshBtn.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				refresh();
-//			}
-//		});
+		
 		
 		// 로그아웃 - 버튼 클릭하면 처음 로그인 페이지로 이동
 		logoutBtn = new JButton("로그아웃");
@@ -73,9 +64,8 @@ public class ListView {
 		});
 
 		//테이블 생성
-		getTable();
+		table = getTable();
 		scrollpane = new JScrollPane(table);
-		scrollpane.setBounds(45, 200, 900, 500);
 		
 		
 		listPane.setLayout(null);
@@ -88,18 +78,37 @@ public class ListView {
 	}
 	
 	//테이블 레이아웃
-	public static void getTable() {
-		table.setRowHeight(25);	//셀 높이 조정
-		table.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
-		table.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
+	public static JTable getTable() {
+		JTable tbl = new JTable();
+		
+		tbl.setRowHeight(25);	//셀 높이 조정
+		tbl.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
+		tbl.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
+		
+		return tbl;
 	}
 	
-	/*
+	
 	//refresh 버튼
-	static void refresh() {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
+	static void refresh(JTable tbl) {
+		DefaultTableModel model = (DefaultTableModel) tbl.getModel();
 		model.setNumRows(0);			//table의 model 0으로
-		table.setModel(getContent());	//table의 model 넣어줌
 	}
-	*/
+	
+	//기준 시간 넣기
+	static void setTimeLabel() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		timeLabel.setText("기준 시간 : " + timestamp);
+	}
+	
+	
+	//수정 금지하는 model 생성
+	static DefaultTableModel createModel(String[] header) {
+		return new DefaultTableModel(header, 0) {
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}
+		};
+	}
+	
 }
