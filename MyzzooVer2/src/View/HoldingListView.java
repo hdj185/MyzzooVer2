@@ -21,7 +21,27 @@ import DAO.HoldingDAO;
 import Model.HoldingStockVO;
 
 
-public class HoldingListView {
+public class HoldingListView extends ListView {
+	HoldingListView() {
+		super();
+	}
+	
+	HoldingListView(String userId) {
+		super(userId);
+	}
+	
+	public static JPanel createUI() {
+		init();
+		table.setModel(getContent());
+		RefreshBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		return listPane;
+	}
+	/*
 	static JPanel listPane;
 	static String userId; //유저 id
 
@@ -102,7 +122,7 @@ public class HoldingListView {
 			return table;
 		}
 		
-		
+		*/
 		//테이블 model 생성
 		public static DefaultTableModel getContent() {
 			String[] header = {"종목명", "평가손익", "수익률", "보유수량", "평가금액", "평균매입가", "현재가"};
