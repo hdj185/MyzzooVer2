@@ -154,7 +154,7 @@ public class LoginView extends JFrame implements ActionListener {
 			public void keyReleased(KeyEvent e) {
 				int key = e.getKeyCode();
 				if(key==KeyEvent.VK_ENTER) {
-//					getLoginData();
+					getLoginData();
 				}
 			}
 
@@ -169,8 +169,8 @@ public class LoginView extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object eventBtn = e.getSource();
 		if(eventBtn==joinBtn) {
+			new SignUpView();
 			dispose();
-//			new SignUp();
 		} else if(eventBtn==loginBtn) {
 			getLoginData();
 		}

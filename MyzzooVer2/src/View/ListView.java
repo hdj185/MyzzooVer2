@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class ListView {
@@ -68,14 +70,17 @@ public class ListView {
 		scrollpane = new JScrollPane(table);
 		
 		
+		//패널에 컴포넌트 추가
 		listPane.setLayout(null);
 		listPane.add(titleLabel);
 		listPane.add(timeLabel);
 		listPane.add(RefreshBtn);
 		listPane.add(logoutBtn);
 		listPane.add(scrollpane);
-		
+		listPane.setBackground(Color.white);
+		listPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	}
+	
 	
 	//테이블 레이아웃
 	public static JTable getTable() {
@@ -94,6 +99,7 @@ public class ListView {
 		DefaultTableModel model = (DefaultTableModel) tbl.getModel();
 		model.setNumRows(0);			//table의 model 0으로
 	}
+	
 	
 	//기준 시간 넣기
 	static void setTimeLabel() {

@@ -21,6 +21,7 @@ public class RankingListView extends ListView {
 		super(userId);
 	}
 	
+	
 	public static JPanel createUI() {
 		init();
 
@@ -35,12 +36,14 @@ public class RankingListView extends ListView {
 			public void actionPerformed(ActionEvent e) {
 				refresh(table);			// 테이블 지우기
 				setTimeLabel();			// 시간 갱신
-				table.setModel(getContent()); //table의 model 넣어줌				
+				table.setModel(getContent()); //table의 model 넣어줌		
+				System.out.println("순위 새로고침");
 			}
 		});
 		
 		return listPane;
 	}
+	
 	
 	//테이블 model 생성
 	public static DefaultTableModel getContent() {
@@ -77,6 +80,7 @@ public class RankingListView extends ListView {
 		return model;
 	}// getContent end
 
+	
 	//시가총액 조, 억 단위 붙이기
 	static String marketCap(String total) {
 		int totalLen = total.length();

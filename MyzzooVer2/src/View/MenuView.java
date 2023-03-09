@@ -1,8 +1,6 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
@@ -37,26 +35,22 @@ public class MenuView extends JFrame{
 		tabbedPane = new JTabbedPane();
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		// 종목 순위 탭 ----------------------------------------------------//
+		// 종목순위 탭 ----------------------------------------------------//
 		new RankingListView(userId);
 		JPanel RankingPane = RankingListView.createUI();
-		RankingPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		tabbedPane.addTab("종목순위", null, RankingPane,"종목순위");
 		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-		RankingPane.setBackground(Color.white);
 		
 		// 보유주식 탭  ----------------------------------------------------//
 		new HoldingListView(userId);
 		JPanel HoldingPane = HoldingListView.createUI();
-		HoldingPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		tabbedPane.addTab("보유주식", null, HoldingPane,"보유주식");
-		HoldingPane.setBackground(Color.white);
 		
 		
 		// 마이페이지 탭  ----------------------------------------------------//     
-//		JPanel mypagePane = new CustomRevise(userId);
+		JPanel mypagePane = new CustomReviseView(userId);
 		
-//		mypagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//		tabbedPane.addTab("마이페이지", null, new CustomRevise(userId), "마이페이지");
+		mypagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		tabbedPane.addTab("마이페이지", null, mypagePane, "마이페이지");
 	}
 }

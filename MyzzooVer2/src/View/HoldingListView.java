@@ -3,6 +3,7 @@ package View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -27,6 +28,8 @@ public class HoldingListView extends ListView {
 	HoldingListView(String userId) {
 		super(userId);
 	}
+	
+	
 	
 	public static JPanel createUI() {
 		init();
@@ -59,6 +62,8 @@ public class HoldingListView extends ListView {
 		return listPane;
 	}
 
+	
+	
 	//테이블 model 생성
 	public static DefaultTableModel getContent() {
 		String[] header = {"종목명", "평가손익", "수익률", "보유수량", "평가금액", "평균매입가", "현재가"};
@@ -91,18 +96,20 @@ public class HoldingListView extends ListView {
 		return model;
 	}// getContent end
 	
+	
+	
 	public static DefaultTableModel getCalContent() {
 		String[] header = {"총평가액", "총매입", "손익률", "손익계산"};
 		DefaultTableModel model = createModel(header);
 		
 		Object record[] = new Object[header.length];
-		
 		CalDAO cal = new CalDAO();
+		DecimalFormat df = new DecimalFormat("#,###");		
 		try {
-			record[0] = cal.totalStock(userId);
-			record[1] = cal.totalAvg(userId);
-			record[2] = cal.profitRate(userId);
-			record[3] = cal.profit(userId);
+			record[0] = df.format(cal.totalStock(userId));
+			record[1] = df.format(Integer.parseInt(cal.totalAvg(userId)));
+			record[2] = cal.profitRate(userId) + "%";
+			record[3] = df.format(cal.profit(userId));
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 		}
