@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 public class ListView {
 	static JPanel listPane;
@@ -23,7 +26,7 @@ public class ListView {
 	static JButton RefreshBtn;
 	static JButton logoutBtn;
 	static JScrollPane scrollpane;
-	static JTable table;
+//	static JTable table;
 	
 	ListView() {
 		listPane = new JPanel();
@@ -66,8 +69,8 @@ public class ListView {
 		});
 
 		//테이블 생성
-		table = getTable();
-		scrollpane = new JScrollPane(table);
+//		table = getTable();
+//		scrollpane = new JScrollPane(table);
 		
 		
 		//패널에 컴포넌트 추가
@@ -76,7 +79,7 @@ public class ListView {
 		listPane.add(timeLabel);
 		listPane.add(RefreshBtn);
 		listPane.add(logoutBtn);
-		listPane.add(scrollpane);
+//		listPane.add(scrollpane);
 		listPane.setBackground(Color.white);
 		listPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	}
@@ -86,6 +89,7 @@ public class ListView {
 	public static JTable getTable() {
 		JTable tbl = new JTable();
 		
+		resizeColumnWidth(tbl);
 		tbl.setRowHeight(25);	//셀 높이 조정
 		tbl.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
 		tbl.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
@@ -115,6 +119,21 @@ public class ListView {
 				return false;
 			}
 		};
+	}
+	
+	
+	//셀 크기 자동 조절
+	public static void resizeColumnWidth(JTable table) {
+	    final TableColumnModel columnModel = table.getColumnModel();
+	    for (int column = 0; column < table.getColumnCount(); column++) {
+	        int width = 50; // Min width
+	        for (int row = 0; row < table.getRowCount(); row++) {
+	            TableCellRenderer renderer = table.getCellRenderer(row, column);
+	            Component comp = table.prepareRenderer(renderer, row, column);
+	            width = Math.max(comp.getPreferredSize().width +1 , width);
+	        }
+	        columnModel.getColumn(column).setPreferredWidth(width);
+	    }
 	}
 	
 }

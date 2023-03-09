@@ -25,7 +25,7 @@ public class MenuView extends JFrame{
 		frame = new JFrame("MY ZZOO");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createUI(frame);
-		frame.setSize(1000, 900);      
+		frame.setSize(1000, 900);
 		frame.setLocationRelativeTo(null);  
 		frame.setVisible(true);
 	}

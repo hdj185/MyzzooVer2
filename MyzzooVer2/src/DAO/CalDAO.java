@@ -61,7 +61,7 @@ public class CalDAO extends DBConn  {
 	// 손익률
 		public Double profitRate(String id) throws NumberFormatException, SQLException, ParseException {
 
-			return (double)(Math.round(totalStock(id)/Double.parseDouble(totalAvg(id))*100*100)/100.0);
+			return (double)Math.round( totalStock(id) / Double.parseDouble(totalAvg(id)) * 100.0 * 100.0  - 100.0 * 100.0) / 100.0;
 		}
 		
 		

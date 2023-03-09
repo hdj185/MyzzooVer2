@@ -18,8 +18,9 @@ import Model.HoldingStockVO;
 
 
 public class HoldingListView extends ListView {
-	static JScrollPane calPane;
+	static JTable table;
 	static JTable calTable;
+	static JScrollPane calPane;
 	
 	HoldingListView() {
 		super();
@@ -36,12 +37,18 @@ public class HoldingListView extends ListView {
 
 		titleLabel.setText("《 보유 주식 잔고 》");	// 타이틀 설정
 		setTimeLabel(); //시간 갱신
+		
+		table = getTable();
 		table.setModel(getContent());				// table 내용 넣기
+		table.setDefaultRenderer(Object.class, new MyColorRender(2)); //컬러 지정
+		scrollpane = new JScrollPane(table);
 		scrollpane.setBounds(45, 255, 900, 445); //scrollpane 크기 및 위치
+		listPane.add(scrollpane);
 		
 		//calTable 추가
 		calTable = getTable();
 		calTable.setModel(getCalContent());
+		calTable.setDefaultRenderer(Object.class, new MyColorRender(0)); //서식 지정
 		calPane = new JScrollPane(calTable);
 		calPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); //스크롤바 없애기
 		calPane.setBounds(45, 200, 900, 45);
