@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -22,11 +23,9 @@ public class ListView {
 	static String userId; //유저 id
 
 	static JLabel titleLabel;
-	static JLabel timeLabel;
 	static JButton RefreshBtn;
 	static JButton logoutBtn;
 	static JScrollPane scrollpane;
-//	static JTable table;
 	
 	ListView() {
 		listPane = new JPanel();
@@ -42,12 +41,6 @@ public class ListView {
 		titleLabel = new JLabel();
 		titleLabel.setBounds(340, 50, 310, 75);
 		titleLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 35));
-
-		
-		// 기준 시간
-		timeLabel = new JLabel("기준 시간 : ");
-		timeLabel.setBounds(45, 180, 200, 15);
-		timeLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
 		
 		
 		// 새로고침 - 버튼 클릭하면 새로고침
@@ -67,19 +60,13 @@ public class ListView {
 				new LoginView();
 			}
 		});
-
-		//테이블 생성
-//		table = getTable();
-//		scrollpane = new JScrollPane(table);
 		
 		
 		//패널에 컴포넌트 추가
 		listPane.setLayout(null);
 		listPane.add(titleLabel);
-		listPane.add(timeLabel);
 		listPane.add(RefreshBtn);
 		listPane.add(logoutBtn);
-//		listPane.add(scrollpane);
 		listPane.setBackground(Color.white);
 		listPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	}
@@ -93,6 +80,7 @@ public class ListView {
 		tbl.setRowHeight(25);	//셀 높이 조정
 		tbl.getTableHeader().setReorderingAllowed(false); // 컬럼들 이동 불가
 		tbl.getTableHeader().setResizingAllowed(false); // 컬럼 크기 조절 불가
+		tbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); //table 행을 하나만 선택할 수 있게 고정
 		
 		return tbl;
 	}
@@ -106,9 +94,9 @@ public class ListView {
 	
 	
 	//기준 시간 넣기
-	static void setTimeLabel() {
+	static void setTimeLabel(JLabel timeLb) {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		timeLabel.setText("기준 시간 : " + timestamp);
+		timeLb.setText("기준 시간 : " + timestamp);
 	}
 	
 	

@@ -1,10 +1,12 @@
 package View;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,6 +18,8 @@ import Model.MarketVO;
 
 public class RankingListView extends ListView {
 	static JTable table;
+	static JLabel timeLabel;
+	
 	RankingListView() {
 		super();
 	}
@@ -29,8 +33,15 @@ public class RankingListView extends ListView {
 		init();
 
 		titleLabel.setText("《 시가 총액 순위 》");				// 타이틀 설정
-		setTimeLabel(); 									// 시간 갱신
+
+		// 기준 시간
+		timeLabel = new JLabel("기준 시간 : ");
+		timeLabel.setBounds(45, 180, 200, 15);
+		timeLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		setTimeLabel(timeLabel); //시간 갱신
+		listPane.add(timeLabel);
 		
+		//보유주식 table 생성
 		table = getTable();
 		table.setModel(getContent());						// table 내용 넣기
 		table.setDefaultRenderer(Object.class, new MyColorRender(1)); //컬러 지정
@@ -42,10 +53,9 @@ public class RankingListView extends ListView {
 		RefreshBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				refresh(RankingListView.table);			// 테이블 지우기
-				setTimeLabel();			// 시간 갱신
-				RankingListView.table.setModel(getContent()); //table의 model 넣어줌		
-				System.out.println("순위 새로고침");
+				refresh(table);			// 테이블 지우기
+				setTimeLabel(timeLabel);			// 시간 갱신
+				table.setModel(getContent()); //table의 model 넣어줌
 			}
 		});
 		
@@ -55,7 +65,6 @@ public class RankingListView extends ListView {
 	
 	//테이블 model 생성
 	public static DefaultTableModel getContent() {
-//		String[] header = {"종목명", "종목코드", "현재가", "전일가", "시가", "고가", "상한가", "저가", "하한가", "시가총액"};
 		String[] header = {"종목명", "현재가", "전일가", "시가", "고가", "상한가", "저가", "하한가", "시가총액"};
 		DefaultTableModel model = createModel(header);
 		
@@ -81,15 +90,6 @@ public class RankingListView extends ListView {
 			record[6] = vo.getMarketLow();
 			record[7] = vo.getMarketLower();
 			record[8] = marketCap(vo.getMarketTotal());
-//			record[1] = vo.getMarketCode();
-//			record[2] = vo.getMarketCurrent();
-//			record[3] = vo.getMarketPre();
-//			record[4] = vo.getMarketOpen();
-//			record[5] = vo.getMarketHigh();
-//			record[6] = vo.getMarketUpper();
-//			record[7] = vo.getMarketLow();
-//			record[8] = vo.getMarketLower();
-//			record[9] = marketCap(vo.getMarketTotal());
 			
 			model.addRow(record);
 		}

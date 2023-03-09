@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -7,6 +8,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,6 +24,8 @@ public class HoldingListView extends ListView {
 	static JTable table;
 	static JTable calTable;
 	static JScrollPane calPane;
+	static JLabel timeLabel;
+	static JButton sellBtn;
 	
 	HoldingListView() {
 		super();
@@ -36,16 +41,23 @@ public class HoldingListView extends ListView {
 		init();
 
 		titleLabel.setText("《 보유 주식 잔고 》");	// 타이틀 설정
-		setTimeLabel(); //시간 갱신
 		
+		// 기준 시간
+		timeLabel = new JLabel("기준 시간 : ");
+		timeLabel.setBounds(45, 180, 200, 15);
+		timeLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		setTimeLabel(timeLabel); //시간 갱신
+		listPane.add(timeLabel);
+		
+		//보유주식 table 생성
 		table = getTable();
 		table.setModel(getContent());				// table 내용 넣기
 		table.setDefaultRenderer(Object.class, new MyColorRender(2)); //컬러 지정
 		scrollpane = new JScrollPane(table);
-		scrollpane.setBounds(45, 255, 900, 445); //scrollpane 크기 및 위치
+		scrollpane.setBounds(45, 245, 900, 455); //scrollpane 크기 및 위치
 		listPane.add(scrollpane);
 		
-		//calTable 추가
+		//calTable 생성
 		calTable = getTable();
 		calTable.setModel(getCalContent());
 		calTable.setDefaultRenderer(Object.class, new MyColorRender(0)); //서식 지정
@@ -54,13 +66,27 @@ public class HoldingListView extends ListView {
 		calPane.setBounds(45, 200, 900, 45);
 		listPane.add(calPane);
 		
+		
+		//매도 버튼 생성
+		sellBtn = new JButton("매도");
+		sellBtn.setBounds(850, 710, 90, 25);
+		sellBtn.setFont(new Font("맑은 고딕", Font.BOLD, 10));
+		sellBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new SellView();
+			}
+		});
+		listPane.add(sellBtn);
+		
+		
 		//새로고침 버튼 이벤트
 		RefreshBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				refresh(table);
 				refresh(calTable);
-				setTimeLabel(); //시간 갱신
+				setTimeLabel(timeLabel); //시간 갱신
 				table.setModel(getContent()); //table의 model 넣어줌
 				calTable.setModel(getCalContent());
 			}
