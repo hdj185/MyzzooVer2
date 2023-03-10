@@ -74,6 +74,9 @@ public class HoldingListView extends ListView {
 		sellBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//행 선택하지 않았을 때 예외처리
+				//select한 열의 값을 받아서 매매창에 넘기는 것까지 처리
+				System.out.println(getSelectName(table));
 				new TradingView();
 			}
 		});
