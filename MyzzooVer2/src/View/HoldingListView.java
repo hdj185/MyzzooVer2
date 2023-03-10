@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -74,10 +75,7 @@ public class HoldingListView extends ListView {
 		sellBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//행 선택하지 않았을 때 예외처리
-				//select한 열의 값을 받아서 매매창에 넘기는 것까지 처리
-				System.out.println(getSelectName(table));
-				new TradingView();
+				tableSelect(table);
 			}
 		});
 		listPane.add(sellBtn);
@@ -154,5 +152,15 @@ public class HoldingListView extends ListView {
 		
 		return model;
 	}
-		
+	
+	
+	//테이블을 선택했는지 확인하기
+	static void tableSelect(JTable tbl) {
+		if (tbl.getSelectedRow() < 0) {
+			//알림창
+			JOptionPane.showMessageDialog(null, "항목을 선택해주세요.");
+		} else {
+			new TradingView(getSelectName(table));
+		}
+	}
 }//class end

@@ -20,9 +20,11 @@ import Service.Crawler;
 
 public class TradingView {
 
+	private Crawler c;
 	private JFrame frame;
 	private String tradingType = "매도";	//매도인지 매입인지
 	private String code = "005930";		//주식 코드
+	private String stockName;
 	
 	private JPanel centerPanel;
 	private JPanel bottomPanel;
@@ -42,6 +44,24 @@ public class TradingView {
 	private JButton cancelBtn;
 	
 	public TradingView() {
+		stockName = "천보";
+		code = new SellDAO().getCode(stockName);
+		try {
+			c = new Crawler(code);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		initialize();
+	}
+	
+	public TradingView(String name) {
+		stockName = name;
+		code = new SellDAO().getCode(stockName);
+		try {
+			c = new Crawler(code);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		initialize();
 	}
 
@@ -74,7 +94,7 @@ public class TradingView {
 		//name 패널
 		namePanel = new JPanel();
 		namePanel.setLayout(new GridLayout(1, 2, 10, 10));
-		nameLbl = new JLabel(getName());
+		nameLbl = new JLabel(stockName);
 		namePanel.add(new JLabel("종목"));
 		namePanel.add(nameLbl);
 		
@@ -88,7 +108,7 @@ public class TradingView {
 		//price 패널
 		pricePanel = new JPanel();
 		pricePanel.setLayout(new GridLayout(1, 2, 10, 10));
-		priceSpinner = new JSpinner(getSpinModel(getCurrent(), 100000, 100));
+		priceSpinner = new JSpinner(getSpinModel(getCurrent(), c.getUpper(), 100)); //최대를 상한가로 제한
 		pricePanel.add(new JLabel("단가"));
 		pricePanel.add(priceSpinner);
 		
@@ -142,13 +162,8 @@ public class TradingView {
 		frame.setVisible(true);
 	}
 	
-	//종목 이름 받기
-	String getName() {
-		return new SellDAO().getName(code);
-	}
-	
 	//스핀 모델 설정
-	SpinnerNumberModel getSpinModel(int init, int max, int increased) {
+	SpinnerNumberModel getSpinModel(long init, long max, int increased) {
 		return new SpinnerNumberModel(init, 1, max, increased);	//초기값, 최소값, 최대값, 증가값 순서
 	}
 	
@@ -164,14 +179,9 @@ public class TradingView {
 	}
 	
 	//현재 시장가 받기
-	int getCurrent() {
-		String str = "";
-		try {
-			str = new Crawler(code).currentPrice();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return Integer.parseInt(str.replace(",", ""));
+	long getCurrent() {
+		String str = c.currentPrice();
+		return Long.parseLong(str.replace(",", ""));
 	}
 	
 }

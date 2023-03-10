@@ -5,17 +5,17 @@ import java.sql.SQLException;
 public class SellDAO extends DBConn {
 	public SellDAO() {}
 	
-	public String getName(String code) {
-		String name = "";
+	public String getCode(String name) {
+		String code = "";
 		
 		try {
 			getConn();
-			sql = "select CompanyName from CompanyTable where CompanyCode = ?";
+			sql = "select CompanyCode from CompanyTable where CompanyName = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, code);
+			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) name = rs.getString(1);
+			if(rs.next()) code = rs.getString(1);
 			
 			rs.close();
 			pstmt.close();
@@ -26,6 +26,6 @@ public class SellDAO extends DBConn {
 			dbClose();
 		}
 		
-		return name;
+		return code;
 	}
 }

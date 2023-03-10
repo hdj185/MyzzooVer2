@@ -124,6 +124,7 @@ public class ListView {
 	    }
 	}
 
+	
 	//선택한 테이블 행 종목명 받기
 	static String getSelectName(JTable tbl) {
 		int row = tbl.getSelectedRow();

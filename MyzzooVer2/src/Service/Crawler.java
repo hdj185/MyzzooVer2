@@ -50,6 +50,11 @@ public class Crawler {
 		return valueSplit(3);
 	}
 	
+	//상한가 구하기
+	public long getUpper() {
+		return Long.parseLong(valueSplit(7).replace(",", ""));
+	}
+	
 	//크롤링한 값을 추출하는 메소드 
 	public String valueSplit(int i) {
 		String str = "";
