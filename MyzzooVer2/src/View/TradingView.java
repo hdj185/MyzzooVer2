@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,9 +15,10 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
+import DAO.SellDAO;
 import Service.Crawler;
 
-public class SellView {
+public class TradingView {
 
 	private JFrame frame;
 	private String tradingType = "매도";	//매도인지 매입인지
@@ -39,7 +41,7 @@ public class SellView {
 	private JButton sellBtn;
 	private JButton cancelBtn;
 	
-	public SellView() {
+	public TradingView() {
 		initialize();
 	}
 
@@ -72,7 +74,7 @@ public class SellView {
 		//name 패널
 		namePanel = new JPanel();
 		namePanel.setLayout(new GridLayout(1, 2, 10, 10));
-		nameLbl = new JLabel("이름");
+		nameLbl = new JLabel(getName());
 		namePanel.add(new JLabel("종목"));
 		namePanel.add(nameLbl);
 		
@@ -86,8 +88,7 @@ public class SellView {
 		//price 패널
 		pricePanel = new JPanel();
 		pricePanel.setLayout(new GridLayout(1, 2, 10, 10));
-//		priceField = new JTextField();
-		priceSpinner = new JSpinner(getSpinModel(1000, 100000, 100));
+		priceSpinner = new JSpinner(getSpinModel(getCurrent(), 100000, 100));
 		pricePanel.add(new JLabel("단가"));
 		pricePanel.add(priceSpinner);
 		
@@ -114,6 +115,12 @@ public class SellView {
 		//bottom 버튼
 		sellBtn = new JButton(tradingType);
 		cancelBtn = new JButton("취소");
+		cancelBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		
 		//centerPanel 배치
 		centerPanel.add(namePanel);
@@ -135,7 +142,10 @@ public class SellView {
 		frame.setVisible(true);
 	}
 	
-	
+	//종목 이름 받기
+	String getName() {
+		return new SellDAO().getName(code);
+	}
 	
 	//스핀 모델 설정
 	SpinnerNumberModel getSpinModel(int init, int max, int increased) {
@@ -145,10 +155,23 @@ public class SellView {
 	//매매단가 계산
 	String getSellingPrice() {
 		DecimalFormat df = new DecimalFormat("#,###");
-		int quantity = ((SpinnerNumberModel)quantitySpinner.getModel()).getNumber().intValue();
-		int price = ((SpinnerNumberModel) priceSpinner.getModel()).getNumber().intValue();
-		String result = df.format(quantity * price) + "원";
-		return result;
+		return df.format(getSpinValue(quantitySpinner) * getSpinValue(priceSpinner)) + "원";
 	}
 
+	//Spinner 값 받기
+	int getSpinValue(JSpinner spin) {
+		return ((SpinnerNumberModel)spin.getModel()).getNumber().intValue();
+	}
+	
+	//현재 시장가 받기
+	int getCurrent() {
+		String str = "";
+		try {
+			str = new Crawler(code).currentPrice();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return Integer.parseInt(str.replace(",", ""));
+	}
+	
 }

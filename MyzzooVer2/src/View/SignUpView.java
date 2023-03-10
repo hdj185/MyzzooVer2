@@ -119,8 +119,8 @@ public class SignUpView extends JFrame implements ActionListener {
 					} else { //회원등록 실패함
 						JOptionPane.showMessageDialog(this, "회원가입에 실패하였습니다\n 관리자에게 문의해 주시기 바랍니다. ");
 					}
-					dispose();
 					new LoginView();
+					dispose();
 				}
 			} else if(btn.equals("취소")) {
 				dispose();

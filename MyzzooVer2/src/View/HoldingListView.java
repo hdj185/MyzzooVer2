@@ -74,7 +74,7 @@ public class HoldingListView extends ListView {
 		sellBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SellView();
+				new TradingView();
 			}
 		});
 		listPane.add(sellBtn);
