@@ -34,18 +34,19 @@ public class TradingDAO extends DBConn {
 		}
 	}
 	
-	public String getQuantity(String id) {
+	public int getQuantity(String id) {
+		int quantity = 0;
 		
 		try {
 			getConn();
 			//holdingstock에서 id, code 일치하는 것중에서 quantity만 출력
-			sql = "select holding_quantity from stockHolding where companyCode = ? and userId = ?";
+			sql = "select holding_quantity from stockHolding where companyCode=? and user_id =?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, code);
 			pstmt.setString(2, id);
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) code = rs.getString(1);
+			if(rs.next()) quantity = Integer.parseInt(rs.getString(1));
 			
 			rs.close();
 			pstmt.close();
@@ -56,6 +57,6 @@ public class TradingDAO extends DBConn {
 			dbClose();
 		}
 		
-		return code;
+		return quantity;
 	}
 }

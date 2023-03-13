@@ -32,12 +32,6 @@ public class HoldingListView extends ListView {
 		super();
 	}
 	
-	HoldingListView(String userId) {
-		super(userId);
-	}
-	
-	
-	
 	public static JPanel createUI() {
 		init();
 
@@ -85,11 +79,7 @@ public class HoldingListView extends ListView {
 		RefreshBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				refresh(table);
-				refresh(calTable);
-				setTimeLabel(timeLabel); //시간 갱신
-				table.setModel(getContent()); //table의 model 넣어줌
-				calTable.setModel(getCalContent());
+				refresh();
 			}
 		});
 		
@@ -106,7 +96,7 @@ public class HoldingListView extends ListView {
 		//데이터 받기
 		ArrayList<HoldingStockVO> list = null;
 		try {
-			list = new HoldingDAO().select(userId);
+			list = new HoldingDAO().select();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -140,10 +130,10 @@ public class HoldingListView extends ListView {
 		CalDAO cal = new CalDAO();
 		DecimalFormat df = new DecimalFormat("#,###");		
 		try {
-			record[0] = df.format(cal.totalStock(userId));
-			record[1] = df.format(Integer.parseInt(cal.totalAvg(userId)));
-			record[2] = cal.profitRate(userId) + "%";
-			record[3] = df.format(cal.profit(userId));
+			record[0] = df.format(cal.totalStock());
+			record[1] = df.format(Integer.parseInt(cal.totalAvg()));
+			record[2] = cal.profitRate() + "%";
+			record[3] = df.format(cal.profit());
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 		}
@@ -160,7 +150,17 @@ public class HoldingListView extends ListView {
 			//알림창
 			JOptionPane.showMessageDialog(null, "항목을 선택해주세요.");
 		} else {
-			new SellView(getSelectName(table), userId);
+			new SellView(getSelectName(table));
 		}
+	}
+	
+	
+	//새로고침 버튼
+	static void refresh() {
+		resetModel(table);
+		resetModel(calTable);
+		setTimeLabel(timeLabel); //시간 갱신
+		table.setModel(getContent()); //table의 model 넣어줌
+		calTable.setModel(getCalContent());
 	}
 }//class end

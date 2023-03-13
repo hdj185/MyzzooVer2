@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 public class MenuView extends JFrame{
 
 	public static JFrame frame;	//기본창
-	static String userId;	//로그인한 user id
+	public static String userId;	//로그인한 user id
 	static JTabbedPane tabbedPane;
 
 	public MenuView() {}
@@ -36,13 +36,13 @@ public class MenuView extends JFrame{
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		// 종목순위 탭 ----------------------------------------------------//
-		new RankingListView(userId);
+		new RankingListView();
 		JPanel RankingPane = RankingListView.createUI();
 		tabbedPane.addTab("종목순위", null, RankingPane,"종목순위");
 		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 		
 		// 보유주식 탭  ----------------------------------------------------//
-		new HoldingListView(userId);
+		new HoldingListView();
 		JPanel HoldingPane = HoldingListView.createUI();
 		tabbedPane.addTab("보유주식", null, HoldingPane,"보유주식");
 		

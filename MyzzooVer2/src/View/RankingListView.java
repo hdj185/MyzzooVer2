@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -22,10 +23,6 @@ public class RankingListView extends ListView {
 	
 	RankingListView() {
 		super();
-	}
-	
-	RankingListView(String userId) {
-		super(userId);
 	}
 	
 	
@@ -53,9 +50,7 @@ public class RankingListView extends ListView {
 		RefreshBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				refresh(table);			// 테이블 지우기
-				setTimeLabel(timeLabel);			// 시간 갱신
-				table.setModel(getContent()); //table의 model 넣어줌
+				refresh();
 			}
 		});
 		
@@ -100,18 +95,26 @@ public class RankingListView extends ListView {
 	
 	//시가총액 조, 억 단위 붙이기
 	static String marketCap(String total) {
-		int totalLen = total.length();
-		String stockPrice;
+		String result = "";
+		int len = total.length();
+		DecimalFormat df = new DecimalFormat("#,###");
 		
-		if(totalLen > 4) {
-			stockPrice = total.substring(0, totalLen - 4) + "조";
-			if (!total.substring(totalLen - 4).equals("0000"))
-				stockPrice += " " + total.substring(totalLen - 4) + "억";
+		if(len > 4) {
+			result = total.substring(0, len - 4) + "조";	//앞자리
+			int lastDigit = Integer.parseInt(total.substring(len - 4)); //조 뒷자리 숫자 int형
+			if (lastDigit > 0) result += " " + df.format(lastDigit) + "억";
 		} else {
-			stockPrice = total + "억";
+			result = df.format(Integer.parseInt(total)) + "억";
 		}
 		
-		return stockPrice;
+		return result;
 	}//marketCap end
 	
+	
+	//새로고침 버튼
+	static void refresh() {
+		resetModel(table);			// 테이블 지우기
+		setTimeLabel(timeLabel);			// 시간 갱신
+		table.setModel(getContent()); //table의 model 넣어줌
+	}
 }//class end

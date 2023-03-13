@@ -5,12 +5,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import Service.Crawler;
+import View.MenuView;
 
 
 public class CalDAO extends DBConn  {
+	String id;
+	
+	public CalDAO() {
+		id = MenuView.userId;
+	}
 	
 	// 총 평가 금액 
-	public int totalStock(String id) throws SQLException, ParseException {
+	public int totalStock() throws SQLException, ParseException {
 		getConn();
 		int sum = 0;
 	// id 부분에 user id를 입력 한다
@@ -35,7 +41,7 @@ public class CalDAO extends DBConn  {
 	
 	
 // 	총 매입 금액   ( 평균 매입 금액 * 보유수량  )		//String type 매개변수
-	public String totalAvg(String id) {
+	public String totalAvg() {
 		String str=null;
 		String sql = "select sum(holding_quantity*Purchase_price) as sum from stockHolding " + 
 				"where user_id = ? " + 
@@ -59,15 +65,15 @@ public class CalDAO extends DBConn  {
 	
 	
 	// 손익률
-		public Double profitRate(String id) throws NumberFormatException, SQLException, ParseException {
+		public Double profitRate() throws NumberFormatException, SQLException, ParseException {
 
-			return (double)Math.round( totalStock(id) / Double.parseDouble(totalAvg(id)) * 100.0 * 100.0  - 100.0 * 100.0) / 100.0;
+			return (double)Math.round( totalStock() / Double.parseDouble(totalAvg()) * 100.0 * 100.0  - 100.0 * 100.0) / 100.0;
 		}
 		
 		
 		// 손익 계산
-		public int profit(String id) throws NumberFormatException, SQLException, ParseException {
-			return totalStock(id) - Integer.parseInt(totalAvg(id));
+		public int profit() throws NumberFormatException, SQLException, ParseException {
+			return totalStock() - Integer.parseInt(totalAvg());
 		}
 	
 }

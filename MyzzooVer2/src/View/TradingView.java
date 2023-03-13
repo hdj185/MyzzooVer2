@@ -21,12 +21,11 @@ import Service.Crawler;
 public class TradingView {
 
 	private Crawler c;
+	protected TradingDAO dao;
 	private JFrame frame;
 	private String tradingType;	//매도인지 매입인지
 	private String code = "005930";		//주식 코드
 	private String stockName;
-	private String userId;
-	TradingDAO dao;
 	
 	private JPanel centerPanel;
 	private JPanel bottomPanel;
@@ -42,7 +41,7 @@ public class TradingView {
 	private JLabel nameLbl;	//종목 이름 라벨
 	private JLabel calLbl;	//계산 결과 라벨
 	private JButton calculBtn;
-	private JButton sellBtn;
+	public JButton tradingBtn;
 	private JButton cancelBtn;
 	
 	public TradingView() {
@@ -58,10 +57,9 @@ public class TradingView {
 		initialize();
 	}
 	
-	public TradingView(String type, String name, String id) {
+	public TradingView(String type, String name) {
 		tradingType = type;
 		stockName = name;
-		userId = id;
 		dao = new TradingDAO(name);
 		code = dao.getCode();
 		try {
@@ -108,7 +106,7 @@ public class TradingView {
 		//quantity 패널
 		quantityPanel = new JPanel();
 		quantityPanel.setLayout(new GridLayout(1, 2, 10, 10));
-		quantitySpinner = new JSpinner(getSpinModel(1, 100000, 1));
+		quantitySpinner = new JSpinner();
 		quantityPanel.add(new JLabel("수량"));
 		quantityPanel.add(quantitySpinner);
 
@@ -140,7 +138,7 @@ public class TradingView {
 		calLabelPanel.add(calLbl);
 		
 		//bottom 버튼
-		sellBtn = new JButton(tradingType);
+		tradingBtn = new JButton(tradingType);
 		cancelBtn = new JButton("취소");
 		cancelBtn.addActionListener(new ActionListener() {
 			@Override
@@ -157,7 +155,7 @@ public class TradingView {
 		centerPanel.add(calLabelPanel);
 		
 		//bottomPanel 배치
-		bottomPanel.add(sellBtn);
+		bottomPanel.add(tradingBtn);
 		bottomPanel.add(cancelBtn);
 		
 		JLabel Titlelbl = new JLabel(tradingType);

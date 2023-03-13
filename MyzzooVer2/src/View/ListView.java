@@ -20,7 +20,6 @@ import javax.swing.table.TableColumnModel;
 
 public class ListView {
 	static JPanel listPane;
-	static String userId; //유저 id
 
 	static JLabel titleLabel;
 	static JButton RefreshBtn;
@@ -28,11 +27,6 @@ public class ListView {
 	static JScrollPane scrollpane;
 	
 	ListView() {
-		listPane = new JPanel();
-	}
-	
-	ListView(String userId) {
-		this.userId = userId;
 		listPane = new JPanel();
 	}
 	
@@ -86,8 +80,8 @@ public class ListView {
 	}
 	
 	
-	//refresh 버튼
-	static void refresh(JTable tbl) {
+	//table model reset
+	static void resetModel(JTable tbl) {
 		DefaultTableModel model = (DefaultTableModel) tbl.getModel();
 		model.setNumRows(0);			//table의 model 0으로
 	}

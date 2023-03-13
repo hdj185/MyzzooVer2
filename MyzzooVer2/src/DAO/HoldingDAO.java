@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 import Model.HoldingStockVO;
 import Service.Crawler;
+import View.MenuView;
 
 public class HoldingDAO extends DBConn {
 	public HoldingDAO() {}
 	
-	public ArrayList<HoldingStockVO> select(String userId) throws SQLException, NumberFormatException, ParseException {
+	public ArrayList<HoldingStockVO> select() throws SQLException, NumberFormatException, ParseException {
 		getConn();
+		String userId = MenuView.userId; 
 		ArrayList<HoldingStockVO> list = new ArrayList<HoldingStockVO>();
 		
 		sql = "select c.CompanyCode, c.CompanyName, s.holding_quantity, s.Purchase_price "
