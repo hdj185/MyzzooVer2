@@ -1,4 +1,4 @@
-package View;
+package View.List;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -21,7 +21,7 @@ public class RankingListView extends ListView {
 	static JTable table;
 	static JLabel timeLabel;
 	
-	RankingListView() {
+	public RankingListView() {
 		super();
 	}
 	

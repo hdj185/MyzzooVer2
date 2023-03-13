@@ -1,4 +1,4 @@
-package View;
+package View.User;
 /* 로그인 View */
 
 import java.awt.BorderLayout;
@@ -24,6 +24,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import DAO.LoginDAO;
+import View.MenuView;
 
 public class LoginView extends JFrame implements ActionListener {
 	Font titleFnt = new Font("휴먼둥근헤드라인",Font.PLAIN,32);
@@ -47,7 +48,7 @@ public class LoginView extends JFrame implements ActionListener {
 			
 			JPanel idPane = new JPanel();
 				JLabel idLbl = new JLabel("아이디");
-				static JTextField user_id = new JTextField(20);
+				public static JTextField user_id = new JTextField(20);
 				
 			JPanel pwdPane = new JPanel();
 				JLabel pwdLbl = new JLabel("비밀번호");

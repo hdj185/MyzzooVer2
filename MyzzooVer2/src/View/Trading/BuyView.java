@@ -1,9 +1,11 @@
-package View;
+package View.Trading;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+
+import View.List.HoldingListView;
 
 public class BuyView extends TradingView {
 	public BuyView() {

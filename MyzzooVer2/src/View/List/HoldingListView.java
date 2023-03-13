@@ -1,4 +1,4 @@
-package View;
+package View.List;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 import DAO.CalDAO;
 import DAO.HoldingDAO;
 import Model.HoldingStockVO;
+import View.Trading.BuyView;
+import View.Trading.SellView;
 
 
 public class HoldingListView extends ListView {
@@ -29,7 +31,7 @@ public class HoldingListView extends ListView {
 	static JButton buyBtn;
 	static JButton sellBtn;
 	
-	HoldingListView() {
+	public HoldingListView() {
 		super();
 	}
 	
@@ -170,7 +172,7 @@ public class HoldingListView extends ListView {
 	
 	
 	//새로고침 버튼
-	static void refresh() {
+	public static void refresh() {
 		resetModel(table);
 		resetModel(calTable);
 		setTimeLabel(timeLabel); //시간 갱신

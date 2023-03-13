@@ -1,9 +1,11 @@
-package View;
+package View.Trading;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+
+import View.List.HoldingListView;
 
 public class SellView extends TradingView {
 	private int quantity;
@@ -13,7 +15,7 @@ public class SellView extends TradingView {
 		tradingType = "매도";
 	}
 	
-	SellView(String name) {
+	public SellView(String name) {
 		super("매도", name);
 		init();
 	}

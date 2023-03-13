@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
+import View.List.HoldingListView;
+import View.List.RankingListView;
+
 public class MenuView extends JFrame{
 
 	public static JFrame frame;	//기본창

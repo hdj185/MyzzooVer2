@@ -1,4 +1,4 @@
-package View;
+package View.List;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -17,6 +17,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+
+import View.MenuView;
+import View.User.LoginView;
 
 public class ListView {
 	static JPanel listPane;

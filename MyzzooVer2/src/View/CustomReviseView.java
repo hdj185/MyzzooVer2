@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import DAO.CustomReviseDAO;
 import Model.CustomReviseVO;
+import View.User.LoginView;
 
 
 public class CustomReviseView extends JPanel implements ActionListener{

@@ -1,4 +1,4 @@
-package View;
+package View.Trading;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
