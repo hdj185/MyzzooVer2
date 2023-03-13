@@ -36,7 +36,7 @@ public class SellView extends TradingView {
 					dao.updateStock(Integer.toString(quantity - spinValue), Integer.toString(dao.getPurchase()));
 					msg = "[" + stockName + "] 종목을 " + spinValue + "주 매도하였습니다.";
 				} else { //보유수량 전체를 선택했을 때
-					dao.deleteStock(code);
+					dao.deleteStock();
 					msg = "[" + stockName + "] 종목을 전체 매도하였습니다.";
 				}
 				HoldingListView.refresh();					//보유주식 창 새로고침

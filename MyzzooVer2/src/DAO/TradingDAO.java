@@ -115,15 +115,18 @@ public class TradingDAO extends DBConn {
 		}
 	}
 	
-	//delete문 - 보유 주식 전체 매도 시
-	public void deleteStock(String code) {
+	
+	//update문 - 보유 주식 매입, 부분 매도 시
+	public void updateStock(String quantity, String price) {
 		try {
 			getConn();
-			sql = "delete from stockHolding where user_id = ? and companyCode = ?";
+			sql = "update stockHolding set holding_quantity=?, purchase_price=? where user_id=? and companyCode=?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, MenuView.userId);
-			pstmt.setString(2, code);
+			pstmt.setString(1, quantity);
+			pstmt.setString(2, price);
+			pstmt.setString(3, MenuView.userId);
+			pstmt.setString(4, code);
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -134,17 +137,15 @@ public class TradingDAO extends DBConn {
 	}
 	
 	
-	//update문 - 보유 주식 매입, 부분 매도 시
-	public void updateStock(String quantity, String money) {
+	//delete문 - 보유 주식 전체 매도 시
+	public void deleteStock() {
 		try {
 			getConn();
-			sql = "update stockHolding set holding_quantity=?, purchase_price=? where user_id=? and companyCode=?";
+			sql = "delete from stockHolding where user_id = ? and companyCode = ?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, quantity);
-			pstmt.setString(2, money);
-			pstmt.setString(3, MenuView.userId);
-			pstmt.setString(4, code);
+			pstmt.setString(1, MenuView.userId);
+			pstmt.setString(2, code);
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
