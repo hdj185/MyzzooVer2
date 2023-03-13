@@ -40,8 +40,8 @@ public class BuyView extends TradingView {
 				}
 				
 				msg = "[" + stockName + "] 종목을 " + spinValue + "주 매입하였습니다.";
-				HoldingListView.refresh();
-				JOptionPane.showMessageDialog(null, msg);
+				HoldingListView.refresh();					//보유주식 창 새로고침
+				JOptionPane.showMessageDialog(null, msg);	//알림창 출력
 				frame.dispose();
 			}
 		});

@@ -37,8 +37,8 @@ public class SellView extends TradingView {
 					dao.deleteStock(code);
 					msg = "[" + stockName + "] 종목을 전체 매도하였습니다.";
 				}
-				HoldingListView.refresh();
-				JOptionPane.showMessageDialog(null, msg);
+				HoldingListView.refresh();					//보유주식 창 새로고침
+				JOptionPane.showMessageDialog(null, msg);	//알림창 출력
 				frame.dispose();
 			}
 		});
