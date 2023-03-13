@@ -2,12 +2,19 @@ package DAO;
 
 import java.sql.SQLException;
 
-public class SellDAO extends DBConn {
-	public SellDAO() {}
+public class TradingDAO extends DBConn {
+	String code = "";
 	
-	public String getCode(String name) {
-		String code = "";
-		
+	public TradingDAO() {}
+	public TradingDAO(String name) {
+		setCode(name);
+	}
+	
+	public String getCode() {
+		return code;
+	}
+	
+	public void setCode(String name) {
 		try {
 			getConn();
 			sql = "select CompanyCode from CompanyTable where CompanyName = ?";
@@ -25,19 +32,17 @@ public class SellDAO extends DBConn {
 		} finally {			
 			dbClose();
 		}
-		
-		return code;
 	}
 	
-	public String getQuantity(String name) {
-		String code = "";
+	public String getQuantity(String id) {
 		
 		try {
 			getConn();
 			//holdingstock에서 id, code 일치하는 것중에서 quantity만 출력
-			sql = "select CompanyCode from CompanyTable where CompanyName = ?";
+			sql = "select holding_quantity from stockHolding where companyCode = ? and userId = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, name);
+			pstmt.setString(1, code);
+			pstmt.setString(2, id);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) code = rs.getString(1);

@@ -103,10 +103,10 @@ public class RankingListView extends ListView {
 		int totalLen = total.length();
 		String stockPrice;
 		
-		if(totalLen > 3) {
-			stockPrice = total.substring(0, totalLen - 3) + "조";
-			if (!total.substring(totalLen - 3).equals("000"))
-				stockPrice += " " + total.substring(totalLen - 3) + "억";
+		if(totalLen > 4) {
+			stockPrice = total.substring(0, totalLen - 4) + "조";
+			if (!total.substring(totalLen - 4).equals("0000"))
+				stockPrice += " " + total.substring(totalLen - 4) + "억";
 		} else {
 			stockPrice = total + "억";
 		}

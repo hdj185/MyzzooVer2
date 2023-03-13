@@ -160,7 +160,7 @@ public class HoldingListView extends ListView {
 			//알림창
 			JOptionPane.showMessageDialog(null, "항목을 선택해주세요.");
 		} else {
-			new TradingView(getSelectName(table));
+			new SellView(getSelectName(table), userId);
 		}
 	}
 }//class end

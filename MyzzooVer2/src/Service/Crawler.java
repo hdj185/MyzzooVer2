@@ -55,6 +55,11 @@ public class Crawler {
 		return Long.parseLong(valueSplit(7).replace(",", ""));
 	}
 	
+	//하한가 구하기
+	public long getLower() {
+		return Long.parseLong(valueSplit(9).replace(",", ""));
+	}
+	
 	//크롤링한 값을 추출하는 메소드 
 	public String valueSplit(int i) {
 		String str = "";

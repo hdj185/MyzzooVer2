@@ -15,16 +15,18 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
-import DAO.SellDAO;
+import DAO.TradingDAO;
 import Service.Crawler;
 
 public class TradingView {
 
 	private Crawler c;
 	private JFrame frame;
-	private String tradingType = "매도";	//매도인지 매입인지
+	private String tradingType;	//매도인지 매입인지
 	private String code = "005930";		//주식 코드
 	private String stockName;
+	private String userId;
+	TradingDAO dao;
 	
 	private JPanel centerPanel;
 	private JPanel bottomPanel;
@@ -35,7 +37,7 @@ public class TradingView {
 	private JPanel calBtnPanel;
 	private JPanel calLabelPanel;
 	
-	private JSpinner quantitySpinner;	//수량 필드
+	protected JSpinner quantitySpinner;	//수량 필드
 	private JSpinner priceSpinner;		//단가 필드
 	private JLabel nameLbl;	//종목 이름 라벨
 	private JLabel calLbl;	//계산 결과 라벨
@@ -45,7 +47,9 @@ public class TradingView {
 	
 	public TradingView() {
 		stockName = "천보";
-		code = new SellDAO().getCode(stockName);
+		tradingType = "매도";
+		dao = new TradingDAO(stockName);
+		code = dao.getCode();
 		try {
 			c = new Crawler(code);
 		} catch (ParseException e) {
@@ -54,9 +58,12 @@ public class TradingView {
 		initialize();
 	}
 	
-	public TradingView(String name) {
+	public TradingView(String type, String name, String id) {
+		tradingType = type;
 		stockName = name;
-		code = new SellDAO().getCode(stockName);
+		userId = id;
+		dao = new TradingDAO(name);
+		code = dao.getCode();
 		try {
 			c = new Crawler(code);
 		} catch (ParseException e) {
