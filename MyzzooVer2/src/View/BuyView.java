@@ -34,9 +34,9 @@ public class BuyView extends TradingView {
 					int updateQuantity = spinValue + quantity;
 					String updatePrice = Integer.toString((spinValue * spinPrice + quantity * purchase) / updateQuantity);
 					
-					dao.updateStock(Integer.toString(updateQuantity), updatePrice);
+					dao.updateStock(Integer.toString(updateQuantity), updatePrice);	//DB 기존값에 update
 				} else { //유저가 보유하지 않은 종목일 경우
-					dao.insertStock(Integer.toString(spinValue), Integer.toString(spinPrice));
+					dao.insertStock(Integer.toString(spinValue), Integer.toString(spinPrice));	//DB에 새로 insert
 				}
 				
 				msg = "[" + stockName + "] 종목을 " + spinValue + "주 매입하였습니다.";
