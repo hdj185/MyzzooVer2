@@ -3,6 +3,8 @@ package View.List;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import DAO.MarketDAO;
 import Model.MarketVO;
+import View.InfoView;
 
 
 public class RankingListView extends ListView {
@@ -42,6 +45,26 @@ public class RankingListView extends ListView {
 		table = getTable();
 		table.setModel(getContent());						// table 내용 넣기
 		table.setDefaultRenderer(Object.class, new MyColorRender(1)); //컬러 지정
+		table.addMouseListener(new MouseListener() {
+			@Override	//마우스 클릭 시 이벤트 발생
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2) {
+					new InfoView(getSelectName(table));
+				}
+			}
+
+			@Override	//마우스 누르는 순간 이벤트 발생
+			public void mousePressed(MouseEvent e) {}
+
+			@Override	//마우스 떼는 순간 이벤트 발생
+			public void mouseReleased(MouseEvent e) {}
+
+			@Override	//마우스 들어오는 순간 이벤트 발생
+			public void mouseEntered(MouseEvent e) {}
+
+			@Override	//마우스 나가는 순간 이벤트 발생
+			public void mouseExited(MouseEvent e) {}
+		});
 		scrollpane = new JScrollPane(table);
 		scrollpane.setBounds(45, 200, 900, 500); // scrollpane 크기 및 위치
 		listPane.add(scrollpane);

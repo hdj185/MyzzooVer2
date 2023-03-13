@@ -20,12 +20,13 @@ import Service.Crawler;
 
 public class TradingView {
 
-	private Crawler c;
-	protected TradingDAO dao;
-	protected String tradingType;	//매도인지 매입인지
 	JFrame frame;
 	String stockName;
-	String code = "005930";		//주식 코드
+	String code = "";		//주식 코드
+	
+	protected String tradingType;	//매도인지 매입인지
+	protected TradingDAO dao;
+	private Crawler c;
 	
 	private JPanel centerPanel;
 	private JPanel bottomPanel;
@@ -44,18 +45,7 @@ public class TradingView {
 	public JButton tradingBtn;
 	private JButton cancelBtn;
 	
-	public TradingView() {
-		stockName = "천보";
-		tradingType = "매도";
-		dao = new TradingDAO(stockName);
-		code = dao.getCode();
-		try {
-			c = new Crawler(code);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		initialize();
-	}
+	public TradingView() {}
 	
 	public TradingView(String type, String name) {
 		tradingType = type;
