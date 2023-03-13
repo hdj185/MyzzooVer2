@@ -26,6 +26,7 @@ public class HoldingListView extends ListView {
 	static JTable calTable;
 	static JScrollPane calPane;
 	static JLabel timeLabel;
+	static JButton buyBtn;
 	static JButton sellBtn;
 	
 	HoldingListView() {
@@ -61,6 +62,17 @@ public class HoldingListView extends ListView {
 		calPane.setBounds(45, 200, 900, 45);
 		listPane.add(calPane);
 		
+		//매입 버튼 생성
+		sellBtn = new JButton("매입");
+		sellBtn.setBounds(750, 710, 90, 25);
+		sellBtn.setFont(new Font("맑은 고딕", Font.BOLD, 10));
+		sellBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tableSelect(table, "매입");
+			}
+		});
+		listPane.add(sellBtn);
 		
 		//매도 버튼 생성
 		sellBtn = new JButton("매도");
@@ -69,7 +81,7 @@ public class HoldingListView extends ListView {
 		sellBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tableSelect(table);
+				tableSelect(table, "매도");
 			}
 		});
 		listPane.add(sellBtn);
@@ -145,10 +157,12 @@ public class HoldingListView extends ListView {
 	
 	
 	//테이블을 선택했는지 확인하기
-	static void tableSelect(JTable tbl) {
+	static void tableSelect(JTable tbl, String type) {
 		if (tbl.getSelectedRow() < 0) {
 			//알림창
 			JOptionPane.showMessageDialog(null, "항목을 선택해주세요.");
+		} else if (type.equals("매입")){
+			new BuyView(getSelectName(table));
 		} else {
 			new SellView(getSelectName(table));
 		}

@@ -22,10 +22,10 @@ public class TradingView {
 
 	private Crawler c;
 	protected TradingDAO dao;
-	private JFrame frame;
-	private String tradingType;	//매도인지 매입인지
-	private String code = "005930";		//주식 코드
-	private String stockName;
+	protected String tradingType;	//매도인지 매입인지
+	JFrame frame;
+	String stockName;
+	String code = "005930";		//주식 코드
 	
 	private JPanel centerPanel;
 	private JPanel bottomPanel;
@@ -37,7 +37,7 @@ public class TradingView {
 	private JPanel calLabelPanel;
 	
 	protected JSpinner quantitySpinner;	//수량 필드
-	private JSpinner priceSpinner;		//단가 필드
+	JSpinner priceSpinner;		//단가 필드
 	private JLabel nameLbl;	//종목 이름 라벨
 	private JLabel calLbl;	//계산 결과 라벨
 	private JButton calculBtn;
